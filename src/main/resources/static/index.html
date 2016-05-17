@@ -1,0 +1,111 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Jimmy Chen Enterprising Programmer</title>
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" href="css/styles.css" type="text/css" />
+<link rel="stylesheet" href="css/buttons.css" type="text/css" />
+<script type="text/javascript" src="js/lib/angular.js"></script>
+<script type="text/javascript" src="js/lib/angular-animate.js"></script>
+<script type="text/javascript" src="js/controllers/app.js"></script>
+<script type="text/javascript" src="js/models/articleListFactory.js"></script>
+<script type="text/javascript" src="js/models/slideFactory.js"></script>
+<script type="text/javascript" src="js/lib/bootstrap.js"></script>
+<script type="text/javascript" src="js/constants/constants.js"></script>
+<script type="text/javascript" src="js/lib/json2.js"></script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||
+    function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();
+        a=s.createElement(o), m=s.getElementsByTagName(o)[0];
+        a.async=1;
+        a.src=g;
+        m.parentNode.insertBefore(a,m)
+    })
+    (window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73743545-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+</head>
+<body>
+<div id="container">
+    <header>
+    <nav>
+	<div class="width">
+    	<ul class="sf-menu dropdown">
+            <li class="selected"><a href="index.html">Home</a></li>
+            <li><a href="resume.html">Resume</a></li>
+    	    <li><a href="projects.html">Projects</a></li>
+            <li><a href="codingteasers.html">Coding Teasers</a></li>
+            <li><a href="aboutme.html">About Me</a>
+        </ul>
+        <div ng-controller="home"><span ng-bind="user"></span></div>
+        <div class="social-wrap c"><a class="facebook" style="float:right; margin-top: 2px" href="http://localhost:8080/login">Sign in <em>w/</em> Facebook</a>
+        </div>   
+    </div>
+    <div class="clear"></div>
+    </nav>
+    </header>
+    <div ng-controller="CarouselCtrl" class="width carousel center">
+        <div>
+            <uib-carousel>
+                <uib-slide ng-repeat="slide in slides" ng-model="slide">
+                    <div>
+                        <div class="carousel-left">
+                            <img class="slide-image" ng-src="{{slide.imagePath}}"/>
+                        </div>
+                        <div class="carousel-right">
+                            <h2>{{slide.title}}</h2>
+                            <p>{{slide.text}}</p>
+                            <p>
+                                <a ng-if="slide.readMoreSlide" href="{{slide.readMoreUrl}}" class="button">Read More</a>
+                                <a ng-repeat="link in slide.links" href="{{link.url}}" class="button" ng-bind="link.text"></a>
+                            </p>
+                        </div>
+                    </div>
+                </uib-slide>
+            </uib-carousel>
+        </div>
+    </div>
+    <div ng-controller="articleCtrl" id="body" class="width">
+		<section id="content" class="two-column with-right-sidebar">
+            <article ng-repeat="article in articles.slice(((currentPage-1)*3), ((currentPage)*3))">
+                <h2>{{article.title}}</h2>
+                <div class="article-time">Posted on
+                    <time datetime="{{article.dateNumbers}}">
+                        {{article.dateText}}
+                    </time>
+                    <p class="article-p">{{article.blurbText}}</p>
+                    <p class="article-button-p">
+                        <a href="{{article.url}}" class="article-button button">Read More</a>
+                    </p>
+                </div>
+            </article>
+            <ul class="pagination">
+                <li><a href="#" ng-click="paginationSelected(-2)">Previous</a></li>
+                <li ng-repeat="i in styleArray track by $index" ng-click="paginationSelected($index+1)" ng-class="i"><a href="#">{{$index+1}}</a></li>
+                <li><a href="#" ng-click="paginationSelected(-1)">Next</a></li>
+            </ul>
+        </section>
+        <aside class="sidebar big-sidebar right-sidebar">
+            <ul>
+               <li>
+                    <h4>Archives</h4>
+                    <ul class="blocklist">
+                        <li><a class="selected sidebar-link" href="index.html">Homepage</a></li>
+                        <li ng-repeat="month in months"><a class="sidebar-link" href="{{month.url}}">{{month.month}}</a></li>
+                    </ul>
+                </li>
+                <li>
+            </ul>
+
+        </aside>
+    	<div class="clear"></div>
+    </div>
+</div>
+</body>
+</html>
