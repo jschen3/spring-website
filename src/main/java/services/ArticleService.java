@@ -1,5 +1,6 @@
 package services;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.mongodb.morphia.Datastore;
@@ -27,6 +28,7 @@ public class ArticleService {
 	@RequestMapping(value="/articles", method=RequestMethod.GET)
 	public String showArticles() throws JsonProcessingException{
 		List<Article> articles = datastore.createQuery(Article.class).asList();	
+		Collections.sort(articles);
 		return mp.writerWithDefaultPrettyPrinter().writeValueAsString(articles);
 
 	}

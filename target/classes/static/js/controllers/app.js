@@ -1,12 +1,12 @@
 /*
- * All the methods to for the index.html page. 2 major parts 1 for the slide carousel 
- * and another for the articles found on the index page. 
+ * All the methods to for the index.html page. 2 major parts 1 for the slide carousel
+ * and another for the articles found on the index page.
  */
 var app=angular.module('app',['ngAnimate','ui.bootstrap', 'Constants']);
 /*
  *  Slide carousel controller.
  */
-angular.module('app').controller('CarouselCtrl', ['$scope', 'SLIDE_URL', 'slideFactory', 
+angular.module('app').controller('CarouselCtrl', ['$scope', 'SLIDE_URL', 'slideFactory',
  function($scope, slideUrl, slideFactory){
     /*
      * Calls the slideFactory get slides function and sets the variable $scope.slides to the response.
@@ -18,9 +18,9 @@ angular.module('app').controller('CarouselCtrl', ['$scope', 'SLIDE_URL', 'slideF
 
 }]);
 /*
- * Article list controller 
+ * Article list controller
  */
-angular.module('app').controller('articleCtrl', ['$scope', '$http', 'ARTICLE_URL', 'articleListFactory', 
+angular.module('app').controller('articleCtrl', ['$scope', '$http', 'ARTICLE_URL', 'articleListFactory',
     function($scope, $http, articleUrl, articleListFactory){
     /*
      * Calls the articleList to init the pagination controls style and format.
@@ -37,7 +37,7 @@ angular.module('app').controller('articleCtrl', ['$scope', '$http', 'ARTICLE_URL
         console.log($scope.articles);
     });
     /*
-     * Controls the articles displayed on the screen by the pagination controls. 
+     * Controls the articles displayed on the screen by the pagination controls.
      */
     $scope.paginationSelected = function(num){
         articleListFactory.changePage(num);
@@ -57,30 +57,20 @@ angular.module('app').controller('articleCtrl', ['$scope', '$http', 'ARTICLE_URL
         month: "February Articles"
     }];
 }]);
-angular.module('app').controller("home", ['$http', '$location', '$scope', function($http, $location, $scope) {
-    $http.get("http://localhost:8080/user").then(function(data) {
-        console.log(data);
-        if (IsJsonString(data)){
-        	$scope.user = data.userAuthentication.details.name;
-        	console.log($scope.user);
-        	$scope.authenticated = true;
-        }        
-    });
+angular.module('app').controller('home', ['$http', '$location', '$scope','loginFactory', function($http, $location, $scope, loginFactory) {
+    $scope.authenticated=false;
     $scope.logout = function() {
-        $http.post('logout', {}).success(function() {
-            $scope.authenticated = false;
-            $location.path("/");
-        }).error(function(data) {
-            console.log("Logout failed")
-            $scope.authenticated = false;
-        });
+        loginFactory.logout();
     };
-    function IsJsonString(str) {
-        try {
-            eval(str);
-        } catch (e) {
-            return false;
+     loginFactory.checkAuthenticated().then(function(response){
+        if (response){
+            $scope.authenticated=true;
+            loginFactory.getUser().then(function(userReturn){
+                $scope.user=userReturn;
+            });
         }
-        return true;
-    }
+        else{
+            $scope.authenticated=false;
+        }
+    });
 }]);

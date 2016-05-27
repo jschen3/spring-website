@@ -10,7 +10,7 @@ security:
       clientAuthenticationScheme: form
     resource:
       userInfoUri: https://graph.facebook.com/me
-  ignored:  /css/**,/js/**, /images/**
+  ignored:  /css/**,/js/**
 logging:
   level:
     org.springframework.security: DEBUG

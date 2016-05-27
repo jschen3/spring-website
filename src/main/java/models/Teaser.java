@@ -25,7 +25,7 @@ import com.mongodb.MongoClient;
 
 import constants.WebsiteConstants;
 @Entity("teasers")
-public class Teaser {
+public class Teaser implements Comparable<Teaser>{
 	private String title;
 	private String locator;
 	private String date;
@@ -203,5 +203,10 @@ public class Teaser {
 		return "Teaser [title=" + title + ", locator=" + locator + ", date=" + date + ", dateDay=" + dateDay
 				+ ", dateText=" + dateText + ", _id=" + _id + ", url=" + url + ", summary=" + summary + ", techniques="
 				+ techniques + ", problem=" + problem + ", solution=" + solution + "]";
+	}
+	@Override
+	public int compareTo(Teaser o) {
+		int compareQuantity = o.getDateDay();
+		return compareQuantity - this.getDateDay();
 	}
 }

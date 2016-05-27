@@ -9,6 +9,7 @@
 <script type="text/javascript" src="js/lib/angular.js"></script>
 <script type="text/javascript" src="js/lib/angular-animate.js"></script>
 <script type="text/javascript" src="js/controllers/app.js"></script>
+<script type="text/javascript" src="js/models/loginFactory.js"></script>
 <script type="text/javascript" src="js/models/articleListFactory.js"></script>
 <script type="text/javascript" src="js/models/slideFactory.js"></script>
 <script type="text/javascript" src="js/lib/bootstrap.js"></script>
@@ -35,17 +36,18 @@
 <div id="container">
     <header>
     <nav>
-	<div class="width">
+	<div class="nav-width" ng-controller="home">
     	<ul class="sf-menu dropdown">
             <li class="selected"><a href="index.html">Home</a></li>
             <li><a href="resume.html">Resume</a></li>
-    	    <li><a href="projects.html">Projects</a></li>
+    	    <li><a href="project.html">Projects</a></li>
             <li><a href="codingteasers.html">Coding Teasers</a></li>
             <li><a href="aboutme.html">About Me</a>
+            <li ng-if="authenticated"><a href="profile.html">{{user}}'s profile</a>
         </ul>
-        <div ng-controller="home"><span ng-bind="user"></span></div>
-        <div class="social-wrap c"><a class="facebook" style="float:right; margin-top: 2px" href="http://localhost:8080/login">Sign in <em>w/</em> Facebook</a>
-        </div>   
+
+        <div ng-hide="authenticated" class="social-wrap c"><a class="facebook" style="float:right; margin-top: 2px" href="http://localhost:8080/login">Sign in <em>w/</em> Facebook</a>
+        </div>
     </div>
     <div class="clear"></div>
     </nav>
