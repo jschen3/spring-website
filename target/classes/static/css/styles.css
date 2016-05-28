@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700);
 .nav-width{
-	max-width: 1000px;
+	max-width: 900px;
 	margin: 0 auto;
 }
 body {
@@ -90,7 +90,7 @@ li ol, li ul {
 }
 
 .width {
-	max-width: 1000px;
+	max-width: 900px;
 	margin: 0 auto;
 }
 
