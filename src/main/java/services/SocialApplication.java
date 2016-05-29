@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
+
 @CrossOrigin(origins = "http://localhost:8080")
 @SpringBootApplication
 @EnableOAuth2Sso
@@ -38,7 +39,7 @@ import org.springframework.web.util.WebUtils;
 @Configuration
 @EnableAutoConfiguration
 public class SocialApplication extends WebSecurityConfigurerAdapter {
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.antMatcher("/**")
@@ -50,20 +51,19 @@ public class SocialApplication extends WebSecurityConfigurerAdapter {
 		http.formLogin()
             .loginPage("/login")
             .permitAll();
-
+		
+		
 	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(SocialApplication.class, args);
 	}
-	
-	public void onAuthenticationSuccess(HttpServletRequest request, 
-			HttpServletResponse response, Authentication authentication) throws 
-			IOException, ServletException 
-			{
-			    response.sendRedirect("http://localhost:8080");
-			}
-	
+
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
+		response.sendRedirect("http://localhost:8080");
+	}
+
 	private Filter csrfHeaderFilter() {
 		return new OncePerRequestFilter() {
 			@Override

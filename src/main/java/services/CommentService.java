@@ -22,7 +22,7 @@ import com.mongodb.MongoClient;
 import constants.WebsiteConstants;
 import models.Comment;
 
-@CrossOrigin(origins="http://localhost:8080")
+//@CrossOrigin(origins="http://localhost:8080",allowedHeaders="*",allowCredentials="true", maxAge = 3600)
 @RestController
 public class CommentService {
 	MongoClient mongoClient = new MongoClient(WebsiteConstants.LOCAL_MONGODB, 27017);

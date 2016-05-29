@@ -24,9 +24,12 @@ public class Comment {
 	private int dateDay;
 	private String author;
 	private String text;
+	public Comment(){
+		
+	}
 	public Comment(String elementId, String dateString, String author, String text) throws ParseException{
 		this.elementId=elementId;
-		id=UUID.randomUUID().toString();
+		this.id=UUID.randomUUID().toString();
 		SimpleDateFormat myFormat = new SimpleDateFormat("MM dd yyyy");
 		Date date = myFormat.parse(dateString);
 		Date jan1 = myFormat.parse("01 01 2016");
@@ -39,14 +42,14 @@ public class Comment {
 	public String getId() {
 		return id;
 	}
-	public void setId(String _id) {
-		this.id = _id;
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getElementId() {
 		return elementId;
 	}
-	public void setElementId(String _elementId) {
-		this.elementId = _elementId;
+	public void setElementId(String elementId) {
+		this.elementId = elementId;
 	}
 	public String getDateString() {
 		return dateString;
