@@ -32,7 +32,7 @@ public class CommentService {
 	@RequestMapping(value="/comments/{id}", method=RequestMethod.GET)
 	public String getComments(@PathVariable String id) throws JsonProcessingException{
 		Query<Comment> query=datastore.createQuery(Comment.class);
-		List<Comment> comments=query.filter("_elementId ==", id).asList();
+		List<Comment> comments=query.filter("elementId ==", id).asList();
 		return mp.writerWithDefaultPrettyPrinter().writeValueAsString(comments);
 	}
 	@RequestMapping(value="/comments/{id}", method=RequestMethod.POST)

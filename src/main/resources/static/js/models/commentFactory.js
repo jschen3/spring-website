@@ -1,4 +1,4 @@
-angular.module('commentApp').factory('commentFactory', ['$q','$http',
+angular.module('commentCtrl').factory('commentFactory', ['$q','$http',
     function($q,$http){
         var commentUrl="http://localhost:8080/comments"
         var _comments;

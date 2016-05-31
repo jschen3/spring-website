@@ -1,6 +1,6 @@
 <!doctype html>
-<html ng-app="articleapp" ng-controller="ArticleCtrl">
-<head>
+<html ng-app="articleapp">
+<head  ng-controller="ArticleCtrl">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title ng-bind="article.title"></title>
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
@@ -8,10 +8,13 @@
 <script type="text/javascript" src="js/lib/angular.js"></script>
 <script type="text/javascript" src="js/lib/angular-animate.js"></script>
 <script type="text/javascript" src="js/controllers/articleapp.js"></script>
-<script type="text/javascript" src="js/models/articleFactory.js"
+<script type="text/javascript" src="js/models/articleFactory.js"></script>
 <script type="text/javascript" src="js/lib/bootstrap.js"></script>
 <script type="text/javascript" src="js/lib/angular-route.js"></script>
 <script type="text/javascript" src="js/constants/constants.js"></script>
+<script type="text/javascript" src="js/controllers/commentApp.js"></script>
+<script type="text/javascript" src="js/models/commentFactory.js"></script>
+<script type="text/javascript" src="js/models/loginFactory.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -41,7 +44,7 @@
             </nav>
         </header>
     </div>
-        <div id="body" class="width">
+        <div id="body" class="width" ng-controller="ArticleCtrl">
             <h2 ng-bind="article.title"></h2>
             <div class="article-time">Posted on
                 <time datetime="{{article.dateNumber}}">{{article.dateText}}</time>
@@ -53,5 +56,6 @@
                 </div>
             </div>
         </div>
+        <div ng-controller="commentCtrl" ng-include="'comment.html'" class="width"></div>
 </body>
 </html>

@@ -1,4 +1,5 @@
-angular.module('app').factory('loginFactory',['$q','$http',
+angular.module('loginFactory',[])
+    .factory('loginFactory',['$q','$http',
     function($q, $http){
         var loginUrl='http://localhost:8080/user';
         var _user;

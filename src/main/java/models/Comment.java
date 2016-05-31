@@ -15,12 +15,13 @@ import com.mongodb.MongoClient;
 
 import constants.WebsiteConstants;
 
-@Entity("comment")
+@Entity("comments")
 public class Comment {
 	@Id
 	private String id;
 	private String elementId;
 	private String dateString;
+	private String date;
 	private int dateDay;
 	private String author;
 	private String text;
@@ -54,11 +55,25 @@ public class Comment {
 	public String getDateString() {
 		return dateString;
 	}
-	public void setDateString(String dateString) {
+	public void setDateString(String dateString) throws ParseException {
 		this.dateString = dateString;
+		SimpleDateFormat myFormat = new SimpleDateFormat("MM dd yyyy");
+		SimpleDateFormat properForm=new SimpleDateFormat("MMMM dd, yyyy");
+		Date date = myFormat.parse(dateString);
+		Date jan1 = myFormat.parse("01 01 2016");
+		long diff = date.getTime() - jan1.getTime();
+		this.dateDay = (int) (long) TimeUnit.DAYS.convert(diff,
+				TimeUnit.MILLISECONDS);
+		this.date=properForm.format(date);
 	}
 	public int getDateDay() {
 		return dateDay;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
 	}
 	public void setDateDay(int dateDay) {
 		this.dateDay = dateDay;

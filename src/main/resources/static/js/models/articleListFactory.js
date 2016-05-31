@@ -69,8 +69,8 @@ angular.module('app').factory('articleListFactory', ['$q', '$http', 'ARTICLE_URL
 		}
 		for (i=0; i<_styleArray.length;i++){
         		_styleArray[i]="";
-    		}
-    		_styleArray[_currentPage-1]="active";				
+    	}
+    	_styleArray[_currentPage-1]="active";				
 	}
 	return articleListFactory;
 }]);

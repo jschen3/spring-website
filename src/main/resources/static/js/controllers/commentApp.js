@@ -1,7 +1,18 @@
-var app=angular.module('commentApp',['loginFactory']);
-app.controller('commentCtrl',['$scope', '$location', 'commentFactory', 'loginFactory',
+angular.module('commentCtrl',['loginFactory']).controller('commentCtrl',['$scope', '$location', 'commentFactory', 'loginFactory',
  function($scope, $location, commentFactory, loginFactory){
   	$scope.id=$location.search().id;
+    $scope.user=null;
+    loginFactory.checkAuthenticated().then(function(response){
+        if (response){
+            $scope.authenticated=true;
+            loginFactory.getUser().then(function(userReturn){
+                $scope.user=userReturn;
+            });
+        }
+        else{
+            $scope.authenticated=false;
+        }
+    });
   	$scope.text="";
   	console.log($scope.id);
   	commentFactory.initStylesArray($scope.id).then(function(response){
@@ -17,12 +28,14 @@ app.controller('commentCtrl',['$scope', '$location', 'commentFactory', 'loginFac
   		$scope.currentPage=commentFactory.getCurrentPage();
   	}
   	$scope.currentPage=commentFactory.getCurrentPage();
-    $scope.post = function(){
+    $scope.post = function(text){
     	var comment={};
-    	comment.author=loginFactory.getUser();
+      loginFactory.getUser().then(function(userReturn){
+                comment.author=userReturn
+      });
     	comment.dateString=getDate();
     	comment.elementId=$scope.id;
-    	comment.text=$scope.text;
+    	comment.text=text;
         console.log("author:"+comment.author);
         console.log("elementId:"+comment.elementId);
         console.log("dateString:"+comment.dateString);

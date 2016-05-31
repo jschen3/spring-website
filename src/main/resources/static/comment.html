@@ -1,59 +1,47 @@
-<html>
-<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" href="css/styles.css" type="text/css" />
-<link rel="stylesheet" href="css/buttons.css" type="text/css" />
-<script type="text/javascript" src="js/lib/angular.js"></script>
-<script type="text/javascript" src="js/lib/angular-animate.js"></script>
-<script type="text/javascript" src="js/controllers/commentApp.js"></script>
-<script type="text/javascript" src="js/models/commentFactory.js"></script>
-<script type="text/javascript" src="js/lib/bootstrap.js"></script>
-<script type="text/javascript" src="js/models/loginFactory.js"></script>
-<div ng-app="commentApp" ng-controller="commentCtrl" style="max-width: 900px">
-	<div class="self-comment" style="height: 145px; border-bottom: 2px solid black">
-		<div>COMMENTS: {{count}}</div>
-		<div style="float: left; padding-right: 10px"><img style="height: 100px; width: auto" src="images/sample-icon.jpg" style="size: 200%"></div>
-		<div><textarea style="padding-left: 10px;width:650px; height: 90px" placeholder="Add a public comment" ng-model="text"></textarea>
-		</div>
-		<div style="width: 700px"><div style="float:right";><button class="comment-button" ng-click="post()">Post</button><button class="comment-button">Cancel</button></div>
+<div class="self-comment" style="height: 145px; border-bottom: 2px solid black" ng-hide="authenticated">
+<div>COMMENTS: {{count}}</div>
+<div style="float: left; padding-right: 10px"><img style="height: 100px; width: auto" src="images/sample-icon.jpg" style="size: 200%"></div>
+<div><textarea style="padding-left: 10px;width:650px; height: 90px" placeholder="Add a public comment" ng-model="text"></textarea>
+</div>
+<div style="width: 700px"><div style="float:right";><button class="comment-button" ng-click="post(text)">Post</button><button class="comment-button">Cancel</button></div>
+</div>
+</div>
+<div style="height:20px"></div>
+<div>
+<div ng-repeat="comment in comments.slice(((currentPage-1)*5), ((currentPage)*5))" style="height: 120px">
+	<div style="float: left; padding-right: 10px"><!--<img ng-src="comment.image"/>-->
+	</div>
+	<div style="height: 25px">
+		<div style="width: 750px">
+			<div style="float:left">{{comment.author}}</div>
+			<div style="float: right">{{comment.date}}</div>
 		</div>
 	</div>
-	<div style="height:20px"></div>
-	<div>
-		<div ng-repeat="comment in comments.slice(((currentPage-1)*5), ((currentPage)*5))" style="height: 120px">
-			<div style="float: left; padding-right: 10px"><img ng-src="comment.image"/>
-			</div>
-			<div style="height: 25px">
-				<div style="width: 750px">
-					<div style="float:left">{{comment.author}}</div>
-					<div style="float: right">{{comment.date}}</div>
-				</div>
-			</div>
-			<div style="width:800px">
-				<p>
-					{{comment.text}}
-				</p>
-			</div>
-		</div>
-		<div style="height: 120px">
-			<div style="float: left; padding-right: 10px"><img style="height: 100px; width: auto" src="images/sample-icon.jpg" style="size: 200%">
-			</div>
-			<div style="height: 25px">
-				<div style="width: 750px">
-					<div style="float:left">Jimmy Chen</div>
-					<div style="float: right">May 29, 2016</div>
-				</div>
-			</div>
-			<div style="width:800px">
-				<p>
-					Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment
-				</p>
-			</div>	
-		</div>
-		<ul class="pagination" style="margin-top: 0px">
-                <li><a href="#" ng-click="paginationSelected(-2)">Previous</a></li>
-                <li ng-repeat="i in styleArray track by $index" ng-click="paginationSelected($index+1)" ng-class="i"><a href="#">{{$index+1}}</a></li>
-                <li><a href="#" ng-click="paginationSelected(-1)">Next</a></li>
-            </ul>
+	<div style="width:800px">
+		<p>
+			{{comment.text}}
+		</p>
 	</div>
 </div>
-</html>
+<div style="height: 120px">
+	<div style="float: left; padding-right: 10px">
+	</div>
+	<div style="height: 25px">
+		<div style="width: 750px">
+			<div style="float:left">Jimmy Chen</div>
+			<div style="float: right">May 29, 2016</div>
+		</div>
+	</div>
+	<div style="width:800px">
+		<p>
+			Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment
+		</p>
+	</div>	
+</div>
+<ul class="pagination" style="margin-top: 0px">
+        <li><a href="#" ng-click="paginationSelected(-2)">Previous</a></li>
+        <li ng-repeat="i in styleArray track by $index" ng-click="paginationSelected($index+1)" ng-class="i"><a href="#">{{$index+1}}</a></li>
+        <li><a href="#" ng-click="paginationSelected(-1)">Next</a></li>
+</ul>
+
+</div>

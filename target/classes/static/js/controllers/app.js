@@ -2,7 +2,7 @@
  * All the methods to for the index.html page. 2 major parts 1 for the slide carousel
  * and another for the articles found on the index page.
  */
-var app=angular.module('app',['ngAnimate','ui.bootstrap', 'Constants']);
+var app=angular.module('app',['ngAnimate','ui.bootstrap', 'Constants','loginFactory']);
 /*
  *  Slide carousel controller.
  */

@@ -2,7 +2,7 @@
  * All the methods to control the article page. 
  * Works for any article, the article displayed depends on the id.
  */
-var app = angular.module('articleapp', ['Constants']);
+var app = angular.module('articleapp', ['Constants', 'commentCtrl']);
 app.controller("ArticleCtrl", ['$scope', '$http', '$location', 'articleFactory', function ($scope, $http, $location, articleFactory) {
     $scope.id=$location.search().id;
     console.log($location.search().id);
