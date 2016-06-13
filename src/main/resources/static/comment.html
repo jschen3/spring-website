@@ -1,9 +1,10 @@
-<div class="self-comment" style="height: 145px; border-bottom: 2px solid black" ng-hide="authenticated">
-<div>COMMENTS: {{count}}</div>
+<html>
+<div ng-controller="ArticleCtrl" class="self-comment" style="height: 145px; border-bottom: 2px solid black" ng-show="authenticated">
+<div>COMMENTS:</div>
 <div style="float: left; padding-right: 10px"><img style="height: 100px; width: auto" src="images/sample-icon.jpg" style="size: 200%"></div>
 <div><textarea style="padding-left: 10px;width:650px; height: 90px" placeholder="Add a public comment" ng-model="text"></textarea>
 </div>
-<div style="width: 700px"><div style="float:right";><button class="comment-button" ng-click="post(text)">Post</button><button class="comment-button">Cancel</button></div>
+<div style="width: 700px"><div style="float:right";><button class="comment-button" ng-click="post(text)">Post</button><button class="comment-button" ng-click="cancel()">Cancel</button></div>
 </div>
 </div>
 <div style="height:20px"></div>
@@ -22,21 +23,6 @@
 			{{comment.text}}
 		</p>
 	</div>
-</div>
-<div style="height: 120px">
-	<div style="float: left; padding-right: 10px">
-	</div>
-	<div style="height: 25px">
-		<div style="width: 750px">
-			<div style="float:left">Jimmy Chen</div>
-			<div style="float: right">May 29, 2016</div>
-		</div>
-	</div>
-	<div style="width:800px">
-		<p>
-			Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment Comment
-		</p>
-	</div>	
 </div>
 <ul class="pagination" style="margin-top: 0px">
         <li><a href="#" ng-click="paginationSelected(-2)">Previous</a></li>

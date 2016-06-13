@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin
 @SpringBootApplication
 @EnableOAuth2Sso
 @RestController
@@ -40,6 +41,8 @@ import org.springframework.web.util.WebUtils;
 @EnableAutoConfiguration
 public class SocialApplication extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private AuthenticationSucessHandler authSuccessHandler;
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.antMatcher("/**")
@@ -50,7 +53,7 @@ public class SocialApplication extends WebSecurityConfigurerAdapter {
 		    .and().addFilterAfter(csrfHeaderFilter(), CsrfFilter.class);
 		http.formLogin()
             .loginPage("/login")
-            .permitAll();
+            .permitAll().successHandler(authSuccessHandler);
 		
 		
 	}
@@ -61,6 +64,8 @@ public class SocialApplication extends WebSecurityConfigurerAdapter {
 
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
+		String url=request.getRequestURL().toString();
+		System.out.println(url);
 		response.sendRedirect("http://localhost:8080");
 	}
 

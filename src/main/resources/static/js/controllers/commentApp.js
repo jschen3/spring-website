@@ -1,8 +1,12 @@
 angular.module('commentCtrl',['loginFactory']).controller('commentCtrl',['$scope', '$location', 'commentFactory', 'loginFactory',
  function($scope, $location, commentFactory, loginFactory){
   	$scope.id=$location.search().id;
-    $scope.user=null;
+    // $scope.user=null;
+    $scope.text='';
+    $scope.authenticated=false;
+    console.log($scope.id);
     loginFactory.checkAuthenticated().then(function(response){
+        console.log("response is:"+response);
         if (response){
             $scope.authenticated=true;
             loginFactory.getUser().then(function(userReturn){
@@ -12,9 +16,8 @@ angular.module('commentCtrl',['loginFactory']).controller('commentCtrl',['$scope
         else{
             $scope.authenticated=false;
         }
+        console.log($scope.authenticated);
     });
-  	$scope.text="";
-  	console.log($scope.id);
   	commentFactory.initStylesArray($scope.id).then(function(response){
   		$scope.styleArray=response;
   	});
@@ -28,19 +31,29 @@ angular.module('commentCtrl',['loginFactory']).controller('commentCtrl',['$scope
   		$scope.currentPage=commentFactory.getCurrentPage();
   	}
   	$scope.currentPage=commentFactory.getCurrentPage();
-    $scope.post = function(text){
-    	var comment={};
+    $scope.post = function(){
+      var comment={};
       loginFactory.getUser().then(function(userReturn){
-                comment.author=userReturn
+                comment.author=userReturn;
+                comment.dateString=getDate();
+            	comment.elementId=$scope.id;
+            	comment.text=$scope.text;
+                console.log("author:"+comment.author);
+                console.log("elementId:"+comment.elementId);
+                console.log("dateString:"+comment.dateString);
+                console.log("text:"+comment.text);
+                commentFactory.addComments(comment,comment.elementId);
+                commentFactory.getComments($scope.id).then(function(response){
+  		                $scope.comments=response;
+  		                console.log($scope.comments);
+                        $scope.cancel();
+              	});
+
       });
-    	comment.dateString=getDate();
-    	comment.elementId=$scope.id;
-    	comment.text=text;
-        console.log("author:"+comment.author);
-        console.log("elementId:"+comment.elementId);
-        console.log("dateString:"+comment.dateString);
-        console.log("text:"+comment.text);
-        commentFactory.addComments(comment,comment.elementId);
+
+    }
+    $scope.cancel = function(){
+        $scope.text=null;
     }
     function getDate(){
     	var today = new Date();
@@ -50,10 +63,10 @@ angular.module('commentCtrl',['loginFactory']).controller('commentCtrl',['$scope
 
 		if(dd<10) {
     		dd='0'+dd
-		} 
+		}
 		if(mm<10) {
     		mm='0'+mm
-		} 
+		}
 		return today = mm+' '+dd+' '+yyyy;
 	}
 }]);

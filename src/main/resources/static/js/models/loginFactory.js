@@ -33,6 +33,9 @@ angular.module('loginFactory',[])
                     _authenticated=false;
                 }
                 defer.resolve(_authenticated);
+            },function(response){
+                _authenticated=false
+                defer.resolve(_authenticated);
             });
             return defer.promise;
         };
