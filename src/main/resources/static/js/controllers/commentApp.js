@@ -1,8 +1,6 @@
 angular.module('commentCtrl',['loginFactory']).controller('commentCtrl',['$scope', '$location', 'commentFactory', 'loginFactory',
  function($scope, $location, commentFactory, loginFactory){
   	$scope.id=$location.search().id;
-    // $scope.user=null;
-    $scope.text='';
     $scope.authenticated=false;
     console.log($scope.id);
     loginFactory.checkAuthenticated().then(function(response){
@@ -42,18 +40,19 @@ angular.module('commentCtrl',['loginFactory']).controller('commentCtrl',['$scope
                 console.log("elementId:"+comment.elementId);
                 console.log("dateString:"+comment.dateString);
                 console.log("text:"+comment.text);
-                commentFactory.addComments(comment,comment.elementId);
-                commentFactory.getComments($scope.id).then(function(response){
-  		                $scope.comments=response;
-  		                console.log($scope.comments);
-                        $scope.cancel();
-              	});
-
+                commentFactory.addComments(comment,comment.elementId).then(function(){
+                    commentFactory.getComments($scope.id).then(function(response){
+      		                $scope.comments=response;
+      		                console.log($scope.comments);
+                  	});
+                });
+                $scope.text='';
       });
 
-    }
+  }
     $scope.cancel = function(){
-        $scope.text=null;
+        this.text='';
+        $scope.text='';
     }
     function getDate(){
     	var today = new Date();
